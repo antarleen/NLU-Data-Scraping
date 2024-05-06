@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import Select
 import time
 import csv
@@ -44,7 +45,7 @@ district_code_key_MH = {
     # "Buldhana": 4,
     # "Beed": 27,
     # "Bhahdara": 10,
-    "Gonda": 11,
+    # "Gonda": 11,
     # "Latur": 28,
     # "Maharastra CoOperative Courts": 41,
     # "Kohlapur": 34,
@@ -68,7 +69,7 @@ district_code_key_MH = {
     # "Mumbai Small Courts": 38,
     # "Nagpur": 9,
     # "Mumbai Motor Accident Claims Tribunal": 39,
-    # "Mumbai CMM Courts": 23,
+    "Mumbai CMM Courts": 23,
     # "Mumbai City Civil Court": 37,
     # "Nanded": 15,
     # "Nadurbar": 1,
@@ -88,7 +89,10 @@ for district_name, code in district_code_key_MH.items():
     # List to store scraped data
 
     # Initialize a Selenium WebDriver
-    driver = webdriver.Chrome(executable_path="D:/SW/chromedriver.exe")
+    # Initialize a Selenium WebDriver
+    service = Service(executable_path="C:/webdrivers/chromedriver.exe")
+    options = webdriver.ChromeOptions()
+    driver = webdriver.Chrome(service=service, options=options)
 
     # Open the URL
     driver.get(url)
@@ -139,9 +143,9 @@ for district_name, code in district_code_key_MH.items():
 
             submit_button = driver.find_element(By.NAME, "submit1")
             print("Enter the CAPTCHA!")
-            time.sleep(10)
+            time.sleep(20)
             submit_button.click()
-            time.sleep(5)
+            time.sleep(15)
             table_element = driver.find_element(By.ID, "titlehid")
             if table_element:
                 scrape_data(district_name, option.text)

@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import Select
 import time
 import csv
@@ -13,9 +14,9 @@ url = "https://bengaluru.dcourts.gov.in/case-status-search-by-act-type/"
 data_list = []
 
 # Initialize a Selenium WebDriver
-driver = webdriver.Chrome(
-    executable_path="D:/SW/chromedriver.exe"
-)  
+service = Service(executable_path="C:/webdrivers/chromedriver.exe")
+options = webdriver.ChromeOptions()
+driver = webdriver.Chrome(service=service, options=options)
 
 # Open the URL
 driver.get(url)
@@ -63,13 +64,13 @@ while True:
         #     EC.presence_of_element_located((By.CLASS_NAME, "loadMoreCases"))
         # )
 
-        load_more_button = WebDriverWait(driver,20).until(
+        load_more_button = WebDriverWait(driver, 20).until(
             EC.element_to_be_clickable((By.CLASS_NAME, "loadMoreCases"))
         )
-        time.sleep(15)
+        time.sleep(10)
         load_more_button.click()
         time.sleep(10)
-        
+
     except:
         print("Ded !!")
         break
